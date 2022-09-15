@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1663280213 source:c:\users\helli\documents\code blocks\programas c\estruturadedadosii\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
