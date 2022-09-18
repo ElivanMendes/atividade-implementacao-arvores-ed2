@@ -82,6 +82,25 @@ NoArv* buscar(NoArv *raiz, int valor){
     return NULL;
 }
 
+int alturaArv(NoArv *raiz){
+
+    if(raiz == NULL){
+        return -1;
+    }
+    else{
+
+        int esq = alturaArv(raiz->esquerda);
+        int dir = alturaArv(raiz->direita);
+
+        if(esq > dir){
+            return esq + 1;
+        }
+        else{
+            return dir + 1;
+        }
+    }
+}
+
 void imprimirArv(NoArv *raiz){
 
     if(raiz != NULL){
@@ -97,7 +116,7 @@ void menu(){
     int opcao;
 
     do{
-        printf("\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n\t0 - Sair\n");
+        printf("\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n\t4 - Altura da Arvore\n\t0 - Sair\n");
         scanf("%d", &opcao);
         printf("\n\tOpcao: %d\n", opcao);
 
@@ -124,6 +143,16 @@ void menu(){
             if(raiz != NULL){
                 valorBuscado = buscar(raiz, lerValorBuscado());
                 imprimirValorBuscado(valorBuscado);
+            }
+            else{
+                printf("\n\tArvore Vazia!\n");
+            }
+
+            break;
+        case 4:
+
+            if(raiz != NULL){
+                printf("\n\tAltura da Arvore: %d\n", alturaArv(raiz));
             }
             else{
                 printf("\n\tArvore Vazia!\n");
