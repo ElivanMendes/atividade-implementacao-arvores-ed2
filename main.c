@@ -118,6 +118,71 @@ int quantidadeDeFolhasArv(NoArv *raiz){
     }
 }
 
+NoArv* remover(NoArv *raiz, int chave){
+
+    if(raiz == NULL){
+        printf("\n\tValor Nao Encontrado!\n");
+        return NULL;
+    }
+    else{
+
+        if(raiz->valor == chave){
+
+            if(raiz->esquerda == NULL && raiz->direita == NULL){
+                free(raiz);
+                printf("\n\tElemento Folha Removido: %d\n", chave);
+                return NULL;
+            }
+            else{
+
+                if(raiz->esquerda != NULL && raiz->direita != NULL){
+
+                    NoArv *aux = raiz->esquerda;
+
+                    while(aux->direita != NULL){
+                        aux = aux->direita;
+                    }
+
+                    raiz->valor = aux->valor;
+                    aux->valor = chave;
+
+                    printf("\n\tElemento Trocado: %d\n", chave);
+
+                    raiz->esquerda = remover(raiz->esquerda, chave);
+
+                    return raiz;
+                }
+                else{
+
+                    NoArv *aux;
+
+                    if(raiz->esquerda != NULL){
+                        aux = raiz->esquerda;
+                    }
+                    else{
+                        aux = raiz->direita;
+                    }
+
+                    free(raiz);
+                    printf("\n\tElemento com 1 Filho Removido: %d\n", chave);
+                    return aux;
+                }
+            }
+        }
+        else{
+
+            if(chave < raiz->valor){
+                raiz->esquerda = remover(raiz->esquerda, chave);
+            }
+            else{
+                raiz->direita = remover(raiz->direita, chave);
+            }
+
+            return raiz;
+        }
+    }
+}
+
 void imprimirArv(NoArv *raiz){
 
     if(raiz != NULL){
@@ -134,7 +199,7 @@ void menu(){
 
     do{
         printf("\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n\t4 - Altura da Arvore\n");
-        printf("\t5 - Quantidade de Nos\n\t6 - Quantidade de Folhas\n\t0 - Sair\n");
+        printf("\t5 - Quantidade de Nos\n\t6 - Quantidade de Folhas\n\t7 - Remover\n\t0 - Sair\n");
         scanf("%d", &opcao);
         printf("\n\tOpcao: %d\n", opcao);
 
@@ -191,6 +256,21 @@ void menu(){
 
             if(raiz != NULL){
                 printf("\n\tQuantidade de Folhas: %d\n", quantidadeDeFolhasArv(raiz));
+            }
+            else{
+                printf("\n\tArvore Vazia!\n");
+            }
+
+            break;
+        case 7:
+
+            if(raiz != NULL){
+
+                printf("\n------------- ARVORE -------------\n");
+                imprimirArv(raiz);
+                printf("\n----------------------------------\n");
+
+                raiz = remover(raiz, lerValor());
             }
             else{
                 printf("\n\tArvore Vazia!\n");
