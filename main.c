@@ -183,6 +183,32 @@ NoArv* remover(NoArv *raiz, int chave){
     }
 }
 
+int maiorValor(NoArv *raiz){
+
+    if(raiz != NULL){
+
+        if(raiz->direita != NULL){
+            return maiorValor(raiz->direita);
+        }
+        else{
+            return raiz->valor;
+        }
+    }
+}
+
+int menorValor(NoArv *raiz){
+
+    if(raiz != NULL){
+
+        if(raiz->esquerda != NULL){
+            return menorValor(raiz->esquerda);
+        }
+        else{
+            return raiz->valor;
+        }
+    }
+}
+
 void imprimirArv(NoArv *raiz){
 
     if(raiz != NULL){
@@ -199,7 +225,8 @@ void menu(){
 
     do{
         printf("\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n\t4 - Altura da Arvore\n");
-        printf("\t5 - Quantidade de Nos\n\t6 - Quantidade de Folhas\n\t7 - Remover\n\t0 - Sair\n");
+        printf("\t5 - Quantidade de Nos\n\t6 - Quantidade de Folhas\n\t7 - Remover\n");
+        printf("\t8 - Maior Valor\n\t9 - Menor Valor\n\t0 - Sair\n");
         scanf("%d", &opcao);
         printf("\n\tOpcao: %d\n", opcao);
 
@@ -271,6 +298,26 @@ void menu(){
                 printf("\n----------------------------------\n");
 
                 raiz = remover(raiz, lerValor());
+            }
+            else{
+                printf("\n\tArvore Vazia!\n");
+            }
+
+            break;
+        case 8:
+
+            if(raiz != NULL){
+                printf("\n\tMaior Valor: %d\n", maiorValor(raiz));
+            }
+            else{
+                printf("\n\tArvore Vazia!\n");
+            }
+
+            break;
+        case 9:
+
+            if(raiz != NULL){
+                printf("\n\tMenor Valor: %d\n", menorValor(raiz));
             }
             else{
                 printf("\n\tArvore Vazia!\n");
