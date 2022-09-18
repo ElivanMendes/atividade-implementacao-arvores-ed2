@@ -101,6 +101,10 @@ int alturaArv(NoArv *raiz){
     }
 }
 
+int quantidadeDeNosArv(NoArv *raiz){
+    return (raiz == NULL) ? 0 : 1 + quantidadeDeNosArv(raiz->esquerda) + quantidadeDeNosArv(raiz->direita);
+}
+
 void imprimirArv(NoArv *raiz){
 
     if(raiz != NULL){
@@ -116,7 +120,8 @@ void menu(){
     int opcao;
 
     do{
-        printf("\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n\t4 - Altura da Arvore\n\t0 - Sair\n");
+        printf("\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n\t4 - Altura da Arvore\n");
+        printf("\t5 - Quantidade de Nos\n\t0 - Sair\n");
         scanf("%d", &opcao);
         printf("\n\tOpcao: %d\n", opcao);
 
@@ -153,6 +158,16 @@ void menu(){
 
             if(raiz != NULL){
                 printf("\n\tAltura da Arvore: %d\n", alturaArv(raiz));
+            }
+            else{
+                printf("\n\tArvore Vazia!\n");
+            }
+
+            break;
+        case 5:
+
+            if(raiz != NULL){
+                printf("\n\tQuantidade de Nos: %d\n", quantidadeDeNosArv(raiz));
             }
             else{
                 printf("\n\tArvore Vazia!\n");
