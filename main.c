@@ -19,9 +19,28 @@ int lerValor(){
     return valor;
 }
 
-void imprimirValor(int valor){
+int lerValorBuscado(){
 
+    int valor;
+
+    printf("\nDigite o Valor Buscado: ");
+    scanf("%d", &valor);
+
+    return valor;
+}
+
+void imprimirValor(int valor){
     printf("%d ", valor);
+}
+
+void imprimirValorBuscado(NoArv *valorBuscado){
+
+    if(valorBuscado != NULL){
+        printf("\n\tValor Encontrado: %d\n", valorBuscado->valor);
+    }
+    else{
+        printf("\n\tValor Nao Encontrado!\n");
+    }
 }
 
 void inserir(NoArv **raiz, int valor){
@@ -37,20 +56,35 @@ void inserir(NoArv **raiz, int valor){
     else{
 
         if(valor < (*raiz)->valor){
-
             inserir(&((*raiz)->esquerda), valor);
         }
         else{
-
             inserir(&((*raiz)->direita), valor);
         }
     }
 }
 
-void imprimirArv(NoArv *raiz){
+NoArv* buscar(NoArv *raiz, int valor){
 
     if(raiz != NULL){
 
+        if(valor == raiz->valor){
+            return raiz;
+        }
+        else if(valor < raiz->valor){
+            return buscar(raiz->esquerda, valor);
+        }
+        else{
+            return buscar(raiz->direita, valor);
+        }
+    }
+
+    return NULL;
+}
+
+void imprimirArv(NoArv *raiz){
+
+    if(raiz != NULL){
         imprimirArv(raiz->esquerda);
         imprimirValor(raiz->valor);
         imprimirArv(raiz->direita);
@@ -59,11 +93,11 @@ void imprimirArv(NoArv *raiz){
 
 void menu(){
 
-    NoArv *raiz = NULL;
+    NoArv *valorBuscado, *raiz = NULL;
     int opcao;
 
     do{
-        printf("\n\t1 - Inserir\n\t2 - Imprimir\n\t0 - Sair\n");
+        printf("\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n\t0 - Sair\n");
         scanf("%d", &opcao);
         printf("\n\tOpcao: %d\n", opcao);
 
@@ -76,12 +110,20 @@ void menu(){
         case 2:
 
             if(raiz != NULL){
-
                 printf("\n------------- ARVORE -------------\n");
-
                 imprimirArv(raiz);
-
                 printf("\n----------------------------------\n");
+            }
+            else{
+                printf("\n\tArvore Vazia!\n");
+            }
+
+            break;
+        case 3:
+
+            if(raiz != NULL){
+                valorBuscado = buscar(raiz, lerValorBuscado());
+                imprimirValorBuscado(valorBuscado);
             }
             else{
                 printf("\n\tArvore Vazia!\n");
